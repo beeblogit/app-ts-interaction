@@ -1,0 +1,20 @@
+org: ncostamagna
+app: app-ts-interaction
+service: app-ts-interaction
+frameworkVersion: '3'
+
+plugins:
+    - serverless-plugin-typescript
+    - serverless-offline
+
+provider:
+  name: aws
+  runtime: nodejs18.x
+
+functions:
+  api:
+    handler: src/handler/comment/get.handler
+    events:
+      - httpApi:
+          path: /comments
+          method: get

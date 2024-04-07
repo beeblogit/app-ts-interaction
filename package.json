@@ -1,0 +1,25 @@
+{
+  "name": "app-ts-interaction",
+  "version": "1.0.0",
+  "description": "user interactions in each post",
+  "main": "index.js",
+  "scripts": {
+    "dev": "npx serverless offline",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/beeblogit/app-ts-interaction.git"
+  },
+  "author": "Nahuel Costamagna",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/beeblogit/app-ts-interaction/issues"
+  },
+  "homepage": "https://github.com/beeblogit/app-ts-interaction#readme",
+  "devDependencies": {
+    "serverless": "^3.38.0",
+    "serverless-offline": "^13.3.3",
+    "serverless-plugin-typescript": "^2.1.5"
+  }
+}
