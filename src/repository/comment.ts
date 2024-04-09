@@ -3,16 +3,17 @@ export interface ICommentRepository {
 }
 
 export class CommentRepository implements ICommentRepository {
-    private dynamoClient: any;
+    private db: any;
 
-    constructor(dynamoClient: any) {
-        this.dynamoClient = dynamoClient;
+    constructor(db: any) {
+        this.db = db;
     }
 
     public getall = async (
         filter: any, page: number, limit: number
     ): Promise<any> => {
         try {
+            console.log("repository")
             return null;
         } catch (e) {
             throw e;

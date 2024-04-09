@@ -1,0 +1,22 @@
+{
+    "compilerOptions": {
+        "allowSyntheticDefaultImports": true,
+        "esModuleInterop": true,
+        "lib": ["es2017"],
+        "module": "commonjs",
+        "noUnusedLocals": true,
+        "outDir": ".build",
+        "sourceMap": true,
+        "target": "es6",
+        "declaration": true,
+        "strictNullChecks": true,
+        "skipLibCheck": true,
+        "pretty": true,
+        "resolveJsonModule": true,
+        "emitDecoratorMetadata": true,
+        "experimentalDecorators": true,
+        "moduleResolution": "node"
+    },
+    "include": ["src", "http-kit", "src2/response", "src2/meta"],
+    "exclude": ["node_modules", "db", "coverage"]
+}
