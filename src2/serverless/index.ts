@@ -1,14 +1,14 @@
-import { BaseResponseI, Response } from '../response';
+import { Response } from '../response';
 
 export interface SlsResponseI {
   statusCode: number;
   body: string;
-  headers?: { [key: string]: any };
+  headers?: { [key: string]: string };
 }
 
 export const SlsResponse = <T>(
   response: Response<T>,
-  headers?: { [key: string]: any },
+  headers?: { [key: string]: string },
 ): SlsResponseI => ({
   statusCode: response.code,
   body: JSON.stringify(response),
@@ -22,11 +22,11 @@ export const CommonHeader: { [key: string]: string } = {
   'Access-Control-Allow-Origin': '*',
 };
 
-export const SlsHandlerResponse = async <T>(err: BaseResponseI<T>, headers?: {[key: string]:string}) => {
+export const SlsHandlerResponse = async <T>(res: Response<T>, headers?: {[key: string]:string}) => {
     if (!headers) {
         headers = CommonHeader
     }
-    return SlsResponse(err.toJSON(), headers);
+    return SlsResponse(res, headers);
 };
 
 export interface Request<Body, Path, Query> {

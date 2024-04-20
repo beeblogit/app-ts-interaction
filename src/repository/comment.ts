@@ -1,5 +1,5 @@
 import {Comment, PrismaClient} from '@prisma/client'
-import { InternalServerError } from '../../src2/response';
+import { internalServerErrorResp } from '../../src2/response';
 
 export interface ICommentRepository {
     getall(filter: any, page: number, limit: number): Promise<Comment[]>;
@@ -19,7 +19,7 @@ export class CommentRepository implements ICommentRepository {
         try {
             return await this.db.comment.findMany()            
         } catch (e) {
-            throw new InternalServerError(e.toString());
+            throw internalServerErrorResp(e.toString());
         }
     };
 
@@ -38,7 +38,7 @@ export class CommentRepository implements ICommentRepository {
                 },
               });
         } catch (e) {
-            throw new InternalServerError(e.toString());
+            throw internalServerErrorResp(e.toString());
         }
     };
 }

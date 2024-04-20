@@ -7,22 +7,16 @@ interface MetaPagination {
     Limit(): number;
 }
 
-interface PaginationRequest {
-    page: number | string;
-    limit: number | string;
-    totalCount?: number | string;
-}
-
 // DefaultPageSize specifies the default page size
 const DefaultPageSize = 25;
 
 // MaxPageSize specifies the maximum page size
 const MaxPageSize = 100;
 
-const buildPaginator = (params: PaginationRequest): MetaPagination => {
-    let page = parseInt(<string>params.page, 10) || 1;
-    let perPage = parseInt(<string>params.limit, 10) || DefaultPageSize;
-    let totalCount = parseInt(<string>params.totalCount, 10);
+const buildPaginator = (page: number | string, limit: number | string, total: number | string): MetaPagination => {
+    let pageValue = parseInt(<string>page, 10) || 1;
+    let perPage = parseInt(<string>limit, 10) || DefaultPageSize;
+    let totalCount = parseInt(<string>total, 10);
     if (totalCount < 0) {
         totalCount = MaxPageSize
     }
@@ -38,16 +32,16 @@ const buildPaginator = (params: PaginationRequest): MetaPagination => {
     if (totalCount > 0) {
         pageCount = Math.ceil(totalCount / perPage);
     }
-    if (page > pageCount) {
-        page = pageCount;
+    if (pageValue > pageCount) {
+        pageValue = pageCount;
     }
-    if (page < 1) {
-        page = 1;
+    if (pageValue < 1) {
+        pageValue = 1;
     }
 
     return {
         totalCount,
-        page,
+        page: pageValue,
         pageCount,
         perPage,
         Offset: function () {
@@ -59,4 +53,4 @@ const buildPaginator = (params: PaginationRequest): MetaPagination => {
     };
 };
 
-export { PaginationRequest, MetaPagination, buildPaginator};
+export {MetaPagination, buildPaginator};

@@ -1,103 +1,57 @@
 import {CODES} from './codes';
 import {MetaPagination} from "../meta"
-import { BaseError, BaseSuccess, BaseResponseI, Response} from './response';
+import { errorResponse, Response, successResponse} from './response';
 
-export { BaseError, BaseSuccess, CODES, BaseResponseI, Response };
+export { CODES, Response };
 
-export class InternalServerError<T = any> extends BaseError<T> {
-    constructor(message: string, errors?: string[]) {
-        // TODO: validation with message value
-        super(message, CODES.INTERNAL_SERVER_ERROR, errors);
-    }
+export const internalServerErrorResp  = (message: string='Internal Server Error', errors?: string[]):Response<null> => {
+    return  errorResponse(message, CODES.INTERNAL_SERVER_ERROR, errors);
 }
 
-export class BadGatewayError<T = any> extends BaseError<T> {
-    constructor(message: string, errors?: string[]) {
-        super(message, CODES.BAD_GATEWAY, errors);
-    }
+export const badGatewayResp  = (message: string='Bad Request', errors?: string[]):Response<null> => {
+    return errorResponse(message, CODES.BAD_GATEWAY ,errors)
 }
 
-export class TimeoutError<T = any> extends BaseError<T> {
-    constructor(message: string, errors?: string[]) {
-        super(message, CODES.REQUEST_TIME_OUT, errors);
-    }
+export const timeoutResp  = (message: string='Timeout Request', errors?: string[]):Response<null> => {
+    return errorResponse(message, CODES.REQUEST_TIME_OUT ,errors)
 }
 
-export class UnauthorizedError<T = any> extends BaseError<T> {
-    constructor(message: string, errors?: string[]) {
-        super(message, CODES.UNAUTHORIZED, errors);
-    }
+export const unauthorizedResp  = (message: string='Unauthorized', errors?: string[]):Response<null> => {
+    return errorResponse(message, CODES.UNAUTHORIZED ,errors)
 }
 
-export class UnprocessableEntityError<T = any> extends BaseError<T> {
-    constructor(message: string, errors?: string[]) {
-        super(message, CODES.UNPROCESSABLE_ENTITY, errors);
-    }
+export const unprocessableEntityResp  = (message: string='Unprocessable', errors?: string[]):Response<null> => {
+    return errorResponse(message, CODES.UNPROCESSABLE_ENTITY ,errors)
 }
 
-export class BadRequestError<T = any> extends BaseError<T> {
-    constructor(message: string, errors?: string[]) {
-        super(message, CODES.BAD_REQUEST, errors);
-    }
+export const badRequestResp  = (message: string='Bad Request', errors?: string[]):Response<null> => {
+    return errorResponse(message, CODES.BAD_REQUEST ,errors)
 }
 
-export class NotFoundError<T = any> extends BaseError<T> {
-    constructor(message: string, errors?: string[]) {
-        super(message, CODES.NOT_FOUND, errors);
-    }
+export const notFoundResp  = (message: string='Not Found', errors?: string[]):Response<null> => {
+    return errorResponse(message, CODES.NOT_FOUND ,errors)
 }
 
-export class ConflictError<T = any> extends BaseError<T> {
-    constructor(message: string, errors?: string[]) {
-        super(message, CODES.CONFLICT, errors);
-    }
+export const conflictResp  = (message: string='Conflict', errors?: string[]):Response<null> => {
+    return errorResponse(message, CODES.CONFLICT ,errors)
 }
 
-export class NotImplementedError<T = any> extends BaseError<T> {
-    constructor(message: string, errors?: string[]) {
-        super(message, CODES.NOT_IMPLEMENTED, errors);
-    }
+export const notImplementedResp  = (message: string='Not implemented', errors?: string[]):Response<null> => {
+    return errorResponse(message, CODES.NOT_IMPLEMENTED ,errors)
 }
 
-export class ForbiddenError<T = any> extends BaseError<T> {
-    constructor(message: string, errors?: string[]) {
-        super(message, CODES.FORBIDDEN, errors);
-    }
+export const forbiddenResp  = (message: string='Forbidden', errors?: string[]):Response<null> => {
+    return errorResponse(message, CODES.FORBIDDEN ,errors)
 }
 
-export class OkResponse<T>
-    extends BaseSuccess<T>
-{
-    constructor(data: T, message: string = '', meta?: MetaPagination) {
-        super(CODES.OK, message, data, meta);
-    }
+export const okResp = <data>(data:data, message:string='OK', meta?:MetaPagination) => {
+    return successResponse(message,CODES.OK,data,meta);
 }
 
-export class CreatedResponse<T>
-    extends BaseSuccess<T>
-{
-    constructor(data: T, message: string = '', meta?: MetaPagination) {
-        super(CODES.CREATED, message, data, meta);
-    }
+export const createdResp = <data>(data:data, message:string='Created', meta?:MetaPagination) => {
+    return successResponse(message,CODES.CREATED,data,meta);
 }
 
-export class AcceptedResponse<T>
-    extends BaseSuccess<T>
-{
-    constructor(data: T, message: string = '', meta?: MetaPagination) {
-        super(CODES.ACCEPTED, message, data, meta);
-    }
+export const acceptedResp = <data>(data:data, message:string='Accepted', meta?:MetaPagination) => {
+    return successResponse(message,CODES.ACCEPTED,data,meta);
 }
-
-export const classifiedErrors = {
-    [CODES.INTERNAL_SERVER_ERROR]: InternalServerError,
-    [CODES.BAD_GATEWAY]: BadGatewayError,
-    [CODES.REQUEST_TIME_OUT]: TimeoutError,
-    [CODES.UNAUTHORIZED]: UnauthorizedError,
-    [CODES.UNPROCESSABLE_ENTITY]: UnprocessableEntityError,
-    [CODES.BAD_REQUEST]: BadRequestError,
-    [CODES.NOT_FOUND]: NotFoundError,
-    [CODES.CONFLICT]: ConflictError,
-    [CODES.NOT_IMPLEMENTED]: NotImplementedError,
-    [CODES.FORBIDDEN]: ForbiddenError,
-};
