@@ -1,8 +1,16 @@
 import { ICommentService } from './../service/comment';
-import { OkResponse } from '../../src2/response';
+import { OkResponse, CreatedResponse, BaseSuccess } from '../../src2/response';
+import {Comment} from '@prisma/client'
 
 export interface ICommentController {
     getall(filter: any, page: number, limit: number): Promise<any>;
+}
+
+export interface StoreReq {
+    userId: string,
+    postId: string,
+    name: string,
+    comment: string,
 }
 
 export class CommentController implements ICommentController {
@@ -12,15 +20,14 @@ export class CommentController implements ICommentController {
         this.service = service;
     }
 
-    public getall = async (filter: any, page: number, limit: number): Promise<any> => {
-        console.log('[Comment GetAll Controller] Get comments.');
+    public getall = async (filter: any, page: number, limit: number): Promise<BaseSuccess<Comment[]>> => {
         const comments = await this.service.getall(filter, page, limit);
-
-
-        return {
-            statusCode: 200,
-            body: JSON.stringify(new OkResponse(comments)),
-            //headers: CommonHeader
-        };
+        return new OkResponse<Comment[]>(comments)
     };
+
+    public store = async  (req: StoreReq): Promise<BaseSuccess<Comment>> => {
+        const comments = await this.service.store(req.userId, req.postId, req.name, req.comment);
+        return new CreatedResponse<Comment>(comments)
+    };
+
 }

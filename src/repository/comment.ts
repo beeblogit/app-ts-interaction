@@ -1,22 +1,44 @@
+import {Comment, PrismaClient} from '@prisma/client'
+import { InternalServerError } from '../../src2/response';
+
 export interface ICommentRepository {
-    getall(filter: any, page: number, limit: number): Promise<any>;
+    getall(filter: any, page: number, limit: number): Promise<Comment[]>;
+    store(userId: string, postId: string, name: string, comment: string): Promise<Comment>;
 }
 
 export class CommentRepository implements ICommentRepository {
-    private db: any;
+    private db:PrismaClient;
 
-    constructor(db: any) {
+    constructor(db:PrismaClient) {
         this.db = db;
     }
 
     public getall = async (
         filter: any, page: number, limit: number
-    ): Promise<any> => {
+    ): Promise<Comment[]> => {
         try {
-            console.log("repository")
-            return null;
+            return await this.db.comment.findMany()            
         } catch (e) {
-            throw e;
+            throw new InternalServerError(e.toString());
+        }
+    };
+
+    
+    public store = async (
+        userId: string, postId: string, name: string, comment: string
+    ): Promise<Comment> => {
+        try {
+            return await this.db.comment.create({
+                data: {
+                    userId,
+                    postId,
+                    name,
+                    comment,
+                    likes: 0,
+                },
+              });
+        } catch (e) {
+            throw new InternalServerError(e.toString());
         }
     };
 }

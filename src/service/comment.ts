@@ -1,7 +1,9 @@
 import { ICommentRepository } from '../repository/comment';
+import {Comment} from '@prisma/client';
 
 export interface ICommentService {
-    getall(filter: any, page: number, limit: number): Promise<any>;
+    getall(filter: any, page: number, limit: number): Promise<Comment[]>;
+    store(userId: string, postId: string, name: string, comment: string): Promise<Comment>;
 }
 
 export class CommentService implements ICommentService {
@@ -13,20 +15,13 @@ export class CommentService implements ICommentService {
         this.repository = repository;
     }
 
-    public getall = async (filter: any, page: number, limit: number): Promise<any> => {
-        console.log('[Comment GetAll Service] Fetching comments.');
-        const comments = await this.repository.getall(filter, page, limit);
-
-        return comments
-        /*    try {
-
-                
-            } catch (e) {
-                console.error({ e });
-                return new NotFoundError(`page not found with ${id} id`);
-            }
-        console.log('[Block Get Service] Page found.');
-        return page;*/
+    public getall = async (filter: any, page: number, limit: number): Promise<Comment[]> => {
+        return await this.repository.getall(filter, page, limit);
     };
+
+
+    public store = async (userId: string, postId: string, name: string, comment: string): Promise<Comment> => {
+        return await this.repository.store(userId, postId, name, comment);
+    }; 
 
 }

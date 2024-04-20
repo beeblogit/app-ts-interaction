@@ -12,9 +12,15 @@ provider:
   runtime: nodejs18.x
 
 functions:
-  api:
+  comments-getall:
     handler: src/handler/comment/get.handler
     events:
       - httpApi:
           path: /comments
           method: get
+  comments-store:
+      handler: src/handler/comment/store.handler
+      events:
+        - httpApi:
+            path: /comments
+            method: post
