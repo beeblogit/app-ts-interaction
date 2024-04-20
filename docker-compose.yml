@@ -1,0 +1,16 @@
+version: "3.5"
+services:
+  inter-comments:
+    platform: linux/amd64
+    container_name: inter-comments
+    build:
+      context: ./.dockers/mysql
+      dockerfile: Dockerfile
+    environment:
+      MYSQL_DATABASE: 'inter-comments'
+      MYSQL_ROOT_PASSWORD: 'root'
+
+    ports:
+      - "3322:3306"
+    volumes:
+      - ./.dockers/mysql/init.sql:/docker-entrypoint-initdb.d/init.sql

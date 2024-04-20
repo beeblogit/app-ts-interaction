@@ -1,67 +1,67 @@
 import {CODES} from './codes';
 import {MetaPagination} from "../meta"
-import { BaseError, BaseSuccess} from './response';
+import { BaseError, BaseSuccess, BaseResponseI, Response} from './response';
 
-export { BaseError, BaseSuccess, CODES };
+export { BaseError, BaseSuccess, CODES, BaseResponseI, Response };
 
 export class InternalServerError<T = any> extends BaseError<T> {
-    constructor(message: string, errors?: string[], lang?: string) {
+    constructor(message: string, errors?: string[]) {
         // TODO: validation with message value
-        super(message, CODES.INTERNAL_SERVER_ERROR, errors, lang);
+        super(message, CODES.INTERNAL_SERVER_ERROR, errors);
     }
 }
 
 export class BadGatewayError<T = any> extends BaseError<T> {
-    constructor(message: string, errors?: string[], lang?: string) {
-        super(message, CODES.BAD_GATEWAY, errors, lang);
+    constructor(message: string, errors?: string[]) {
+        super(message, CODES.BAD_GATEWAY, errors);
     }
 }
 
 export class TimeoutError<T = any> extends BaseError<T> {
-    constructor(message: string, errors?: string[], lang?: string) {
-        super(message, CODES.REQUEST_TIME_OUT, errors, lang);
+    constructor(message: string, errors?: string[]) {
+        super(message, CODES.REQUEST_TIME_OUT, errors);
     }
 }
 
 export class UnauthorizedError<T = any> extends BaseError<T> {
-    constructor(message: string, errors?: string[], lang?: string) {
-        super(message, CODES.UNAUTHORIZED, errors, lang);
+    constructor(message: string, errors?: string[]) {
+        super(message, CODES.UNAUTHORIZED, errors);
     }
 }
 
 export class UnprocessableEntityError<T = any> extends BaseError<T> {
-    constructor(message: string, errors?: string[], lang?: string) {
-        super(message, CODES.UNPROCESSABLE_ENTITY, errors, lang);
+    constructor(message: string, errors?: string[]) {
+        super(message, CODES.UNPROCESSABLE_ENTITY, errors);
     }
 }
 
 export class BadRequestError<T = any> extends BaseError<T> {
-    constructor(message: string, errors?: string[], lang?: string) {
-        super(message, CODES.BAD_REQUEST, errors, lang);
+    constructor(message: string, errors?: string[]) {
+        super(message, CODES.BAD_REQUEST, errors);
     }
 }
 
 export class NotFoundError<T = any> extends BaseError<T> {
-    constructor(message: string, errors?: string[], lang?: string) {
-        super(message, CODES.NOT_FOUND, errors, lang);
+    constructor(message: string, errors?: string[]) {
+        super(message, CODES.NOT_FOUND, errors);
     }
 }
 
 export class ConflictError<T = any> extends BaseError<T> {
-    constructor(message: string, errors?: string[], lang?: string) {
-        super(message, CODES.CONFLICT, errors, lang);
+    constructor(message: string, errors?: string[]) {
+        super(message, CODES.CONFLICT, errors);
     }
 }
 
 export class NotImplementedError<T = any> extends BaseError<T> {
-    constructor(message: string, errors?: string[], lang?: string) {
-        super(message, CODES.NOT_IMPLEMENTED, errors, lang);
+    constructor(message: string, errors?: string[]) {
+        super(message, CODES.NOT_IMPLEMENTED, errors);
     }
 }
 
 export class ForbiddenError<T = any> extends BaseError<T> {
-    constructor(message: string, errors?: string[], lang?: string) {
-        super(message, CODES.FORBIDDEN, errors, lang);
+    constructor(message: string, errors?: string[]) {
+        super(message, CODES.FORBIDDEN, errors);
     }
 }
 

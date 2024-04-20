@@ -6,7 +6,10 @@
   "scripts": {
     "dev": "npx serverless offline",
     "build": "npx tsc",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "prisma": "prisma",
+    "prisma:migrate": "prisma migrate dev",
+    "prisma:deploy": "prisma migrate deploy --schema=./prisma/schema.prisma"
   },
   "repository": {
     "type": "git",
@@ -22,6 +25,11 @@
     "serverless": "^3.38.0",
     "serverless-offline": "^13.3.3",
     "serverless-plugin-typescript": "^2.1.5",
-    "typescript": "^5.4.4"
+    "typescript": "^5.4.4",
+    "prisma": "^5.12.1",
+    "prisma-erd-generator": "^1.11.2"
+  },
+  "dependencies": {
+    "@prisma/client": "^5.12.1"
   }
 }
