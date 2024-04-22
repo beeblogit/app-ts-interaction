@@ -1,4 +1,4 @@
-import {MetaPagination} from "../meta"
+import {MetaPagination} from "./meta"
 
 export interface Response<T> {
     message: string;
@@ -18,7 +18,7 @@ export const successResponse = <data>(message:string, code: number, data?:data, 
     } as Response<data>
 }
 
-export const errorResponse = (message: string, code: number, errors?: string[]): Response<null> => {
+export const errorResponse = <Errors>(message: string, code: number, errors?: Errors): Response<null> => {
     return {
         message,
         code,

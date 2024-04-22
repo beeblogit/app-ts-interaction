@@ -13,13 +13,13 @@ provider:
 
 functions:
   comments-getall:
-    handler: src/handler/comment/get.handler
+    handler: cmd/comment/get.handler
     events:
       - httpApi:
           path: /comments
           method: get
   comments-store:
-      handler: src/handler/comment/store.handler
+      handler: cmd/comment/store.handler
       events:
         - httpApi:
             path: /comments

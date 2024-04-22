@@ -1,16 +1,11 @@
 import { ICommentService } from './../service/comment';
-import { okResp, createdResp, Response } from '../../src2/response';
-import {Comment} from '@prisma/client'
+import { okResp, createdResp, Response, buildPaginator } from '../../src2/response';
+import {ReqGetAll, ReqStore} from '../handler/comment';
+import {Comment} from '@prisma/client';
 
 export interface ICommentController {
-    getall(filter: any, page: string, limit: string): Promise<any>;
-}
-
-export interface StoreReq {
-    userId: string,
-    postId: string,
-    name: string,
-    comment: string,
+    getall(req: ReqGetAll): Promise<Response<Comment[]>>;
+    store(req: ReqStore): Promise<Response<Comment>>;
 }
 
 export class CommentController implements ICommentController {
@@ -20,13 +15,16 @@ export class CommentController implements ICommentController {
         this.service = service;
     }
 
-    public getall = async (filter: any, page: string, limit: string): Promise<Response<Comment[]>> => {
+    public getall = async (req: ReqGetAll): Promise<Response<Comment[]>> => {
         
-        const comments = await this.service.getall(filter, 0, 0);
-        return okResp<Comment[]>(comments)
+        const count = await this.service.count(req.postId, req.userId);
+        const meta = buildPaginator(req.page, req.limit, count);
+        console.log(meta)
+        const comments = await this.service.getall(meta.Offset(), meta.Limit(),req.postId, req.userId);
+        return okResp<Comment[]>(comments, "", meta);
     };
 
-    public store = async  (req: StoreReq): Promise<Response<Comment>> => {
+    public store = async  (req: ReqStore): Promise<Response<Comment>> => {
         const comments = await this.service.store(req.userId, req.postId, req.name, req.comment);
         return createdResp<Comment>(comments)
     };

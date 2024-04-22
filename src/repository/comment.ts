@@ -2,8 +2,9 @@ import {Comment, PrismaClient} from '@prisma/client'
 import { internalServerErrorResp } from '../../src2/response';
 
 export interface ICommentRepository {
-    getall(filter: any, page: number, limit: number): Promise<Comment[]>;
+    getall(page: number, limit: number, postId?: string, userId?: string): Promise<Comment[]>;
     store(userId: string, postId: string, name: string, comment: string): Promise<Comment>;
+    count(postId?: string, userId?: string): Promise<number>;
 }
 
 export class CommentRepository implements ICommentRepository {
@@ -14,10 +15,13 @@ export class CommentRepository implements ICommentRepository {
     }
 
     public getall = async (
-        filter: any, page: number, limit: number
+        page: number, limit: number, postId?: string, userId?: string
     ): Promise<Comment[]> => {
         try {
-            return await this.db.comment.findMany()            
+            return await this.db.comment.findMany({
+                skip: page,
+                take: limit,
+            })            
         } catch (e) {
             throw internalServerErrorResp(e.toString());
         }
@@ -41,4 +45,12 @@ export class CommentRepository implements ICommentRepository {
             throw internalServerErrorResp(e.toString());
         }
     };
+
+    public count = async (postId?: string, userId?: string): Promise<number> => {
+        try {
+            return await this.db.comment.count();
+        } catch (e) {
+            throw internalServerErrorResp(e.toString());
+        }
+    }
 }

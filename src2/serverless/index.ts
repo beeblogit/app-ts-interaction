@@ -1,4 +1,4 @@
-import { Response } from '../response';
+import { Response, internalServerErrorResp } from '../response';
 
 export interface SlsResponseI {
   statusCode: number;
@@ -26,18 +26,21 @@ export const SlsHandlerResponse = async <T>(res: Response<T>, headers?: {[key: s
     if (!headers) {
         headers = CommonHeader
     }
+    if (!("code" in res)) {
+        return SlsResponse(internalServerErrorResp<null>(), headers);
+    }
     return SlsResponse(res, headers);
 };
 
-export interface Request<Body, Path, Query> {
+export interface Request<Body> {
   body: Body,
-  pathParemeters: Path,
-  queryStringParameters: Query,
+  pathParemeters: { [key: string]: string },
+  queryStringParameters: { [key: string]: string },
   headers: {[key: string]:string},
   rawPath: string,
 }
 
-export const castRequest = <Body, Path, Query>(req: Request<string, Path, Query>): Request<Body, Path, Query> => {
+export const castRequest = <Body>(req: Request<string>): Request<Body> => {
     return {
         ...req, 
         body: JSON.parse(req.body) as Body,
