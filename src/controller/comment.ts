@@ -1,5 +1,5 @@
 import { ICommentService } from './../service/comment';
-import { okResp, createdResp, Response, buildPaginator } from '../../src2/response';
+import { okResp, createdResp, Response, buildPaginator } from 'ts-responses';
 import {ReqGetAll, ReqStore} from '../handler/comment';
 import {Comment} from '@prisma/client';
 

@@ -1,5 +1,5 @@
 import {Comment, PrismaClient} from '@prisma/client'
-import { internalServerErrorResp } from '../../src2/response';
+import { internalServerErrorResp } from 'ts-responses';
 
 export interface ICommentRepository {
     getall(page: number, limit: number, postId?: string, userId?: string): Promise<Comment[]>;
