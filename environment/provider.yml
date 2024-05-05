@@ -1,0 +1,16 @@
+name: aws
+runtime: nodejs18.x
+versionFunctions: ${param:aws-version-function}
+stage: ${opt:stage,'local'}
+environment: ${file(./environment/env.yml)}
+region: ${param:aws-region}
+tracing:
+    apiGateway: ${param:aws-tracing-apigateway}
+    lambda: ${param:aws-tracing-lambda}
+apiGateway:
+    apiKeys:
+        - ${param:aws-api-key-name}
+stackTags:
+    env: ${param:environment}
+    service: ${param:service}
+    process: ${param:process}

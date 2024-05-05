@@ -4,7 +4,7 @@
   "description": "user interactions in each post",
   "main": "index.js",
   "scripts": {
-    "dev": "npx serverless offline",
+    "dev": "npx serverless offline --stage local",
     "build": "npx tsc",
     "test": "echo \"Error: no test specified\" && exit 1",
     "prisma": "prisma",

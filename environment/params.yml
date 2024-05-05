@@ -1,0 +1,17 @@
+default:
+    vertical: gbl
+    service: interactions
+    process: beeblogit
+    aws-region: us-east-1
+    aws-api-key-name: ${param:environment}-${param:process}-${param:service}
+    aws-policy-lambda-exec: 'arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole'
+    aws-tracing-apigateway: false
+    aws-tracing-lambda: false
+    aws-version-function: false
+prod:
+    environment: prod
+    aws-log-retention: 180
+local:
+    environment: local
+    aws-log-retention: 7
+    aws-api-key-name: my-local-key

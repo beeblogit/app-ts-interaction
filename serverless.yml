@@ -1,26 +1,37 @@
-org: ncostamagna
-app: app-ts-interaction
 service: app-ts-interaction
-frameworkVersion: '3'
+frameworkVersion: '3.38.0'
+
+useDotenv: true
+
+params: ${file(./environment/params.yml)}
+provider: ${file(./environment/provider.yml)}
 
 plugins:
     - serverless-plugin-typescript
     - serverless-offline
 
-provider:
-  name: aws
-  runtime: nodejs18.x
+custom:
+  serverless-offline:
+    httpPort: 3000
+    noPrependStageInUrl: true
+    noTimeout: true
+
+package:
+    individually: true
+    exclude:
+        - '.*/**'
+        - 'node_modules'
 
 functions:
   comments-getall:
     handler: cmd/comment/get.handler
     events:
-      - httpApi:
+      - http:
           path: /comments
           method: get
   comments-store:
-      handler: cmd/comment/store.handler
-      events:
-        - httpApi:
-            path: /comments
-            method: post
+    handler: cmd/comment/store.handler
+    events:
+      - http:
+          path: /comments
+          method: post
