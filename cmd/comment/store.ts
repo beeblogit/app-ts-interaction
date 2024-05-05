@@ -5,21 +5,12 @@ import {decoStore} from './../../src/handler/comment'
 import { Response } from 'ts-responses'
 import {SlsHandlerResponse, Request} from 'ts-serverless'
 import { Comment, PrismaClient } from '@prisma/client';
-import {Logger} from '../../src/common/logger'
+import {Logger, SentryLog, WinstonLog} from 'logger-fusion'
+import {initSentry, initWinston} from  '../../src/bootstrap/index'
+import {WINSTON_DEBBUG} from '../../src/config'
 
-const Sentry = require("@sentry/serverless");
-
-Sentry.AWSLambda.init({
-  dsn: process.env.SENTRY_DSN,
-  tracesSampleRate: 0,
-  tracesSampler: () => false,
-  debug: false,
-  environment: process.env.NODE_ENV,
-  enabled: process.env.SENTRY_ENABLED === 'true'
-});
-
-const log = new Logger()
-log.setSentry= Sentry;
+const Sentry = initSentry();
+const log = new Logger(new SentryLog(Sentry,false), new WinstonLog(initWinston(), WINSTON_DEBBUG));
 
 const db:PrismaClient = new PrismaClient({});
 const repo = new CommentRepository(db, log);
@@ -36,8 +27,6 @@ export const handler = Sentry.AWSLambda.wrapHandler(   async (event: Request<str
           )
     );
   } catch (err: unknown | Response<null>) {
-    Sentry.captureMessage(err);
-    await Sentry.flush();
     return await SlsHandlerResponse<null>(err as Response<null>);
   }
 })

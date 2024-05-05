@@ -32,8 +32,10 @@
   "dependencies": {
     "@prisma/client": "^5.12.1",
     "@sentry/serverless": "^7.113.0",
+    "logger-fusion": "^1.0.0",
     "ts-responses": "^1.0.7",
     "ts-serverless": "^1.0.0",
+    "winston": "^3.13.0",
     "zod": "^3.22.5",
     "zod-validation-error": "^3.1.0"
   }

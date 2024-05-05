@@ -1,5 +1,6 @@
 import { ICommentRepository } from '../repository/comment';
 import {Comment} from '@prisma/client';
+import {ILogger} from 'logger-fusion'
 
 export interface ICommentService {
     getall(page: number, limit: number,postId?: string, userId?: string): Promise<Comment[]>;
@@ -9,18 +10,19 @@ export interface ICommentService {
 
 export class CommentService implements ICommentService {
     private repository: ICommentRepository;
+    private logger: ILogger;
 
     constructor(
         repository: ICommentRepository,
+        logger: ILogger,
     ) {
         this.repository = repository;
+        this.logger = logger;
     }
 
     public getall = async (page: number, limit: number, postId?: string, userId?: string): Promise<Comment[]> => {
-        console.log(page, limit)
         return await this.repository.getall(page, limit, postId, userId);
     };
-
 
     public store = async (userId: string, postId: string, name: string, comment: string): Promise<Comment> => {
         return await this.repository.store(userId, postId, name, comment);

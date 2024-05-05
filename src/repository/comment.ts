@@ -1,6 +1,6 @@
 import {Comment, PrismaClient} from '@prisma/client'
 import { internalServerErrorResp } from 'ts-responses';
-import {ILogger} from '../common/logger'
+import {ILogger} from 'logger-fusion'
 
 export interface ICommentRepository {
     getall(page: number, limit: number, postId?: string, userId?: string): Promise<Comment[]>;
@@ -26,11 +26,10 @@ export class CommentRepository implements ICommentRepository {
                 take: limit,
             })            
         } catch (e) {
-            this.logger.log(e);
+            this.logger.logError(e);
             throw internalServerErrorResp(e.toString());
         }
     };
-
     
     public store = async (
         userId: string, postId: string, name: string, comment: string
@@ -46,7 +45,7 @@ export class CommentRepository implements ICommentRepository {
                 },
               });
         } catch (e) {
-            this.logger.log(e);
+            this.logger.logError(e);
             throw internalServerErrorResp(e.toString());
         }
     };
@@ -55,7 +54,7 @@ export class CommentRepository implements ICommentRepository {
         try {
             return await this.db.comment.count();
         } catch (e) {
-            this.logger.log(e);
+            this.logger.logError(e);
             throw internalServerErrorResp(e.toString());
         }
     }
