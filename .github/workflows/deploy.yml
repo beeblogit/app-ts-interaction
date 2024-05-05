@@ -42,12 +42,6 @@ jobs:
         env:
           var: ${{ toJson(vars) }}
         run: echo "$var" | jq -r 'to_entries[] | "\(.key)=\(.value)"' >> $GITHUB_ENV
-      - name: Serverless deploy
-        run: |
-          go env -w GOSUMDB=off
-          go mod tidy
-          go env
-          make deploy
       - name: Run build Node
         if: ${{ inputs.language == 'node' && inputs.build}}
         run: npm ci && npm run build
