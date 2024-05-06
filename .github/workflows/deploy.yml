@@ -8,4 +8,7 @@ on:
 jobs:
   deploy:
     uses: ncostamagna/github-workflows-templates/.github/workflows/node-serverless-deploy.yml@feat/deploy-node
+    permissions:
+      id-token: write
+      contents: read
     secrets: inherit
