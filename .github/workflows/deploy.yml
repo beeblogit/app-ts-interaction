@@ -14,3 +14,5 @@ jobs:
     secrets:
       AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
       AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      DATABASE_URL: ${{ secret.DATABASE_URL }}
+      SENTRY_DSN: ${{ secret.SENTRY_DSN }}
