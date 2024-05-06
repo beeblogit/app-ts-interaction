@@ -21,14 +21,17 @@ export class CommentService implements ICommentService {
     }
 
     public getall = async (page: number, limit: number, postId?: string, userId?: string): Promise<Comment[]> => {
+        this.logger.debbugMessage("GETALL service");
         return await this.repository.getall(page, limit, postId, userId);
     };
 
     public store = async (userId: string, postId: string, name: string, comment: string): Promise<Comment> => {
+        this.logger.debbugMessage("STORE service");
         return await this.repository.store(userId, postId, name, comment);
     }; 
 
     public count = async (postId?: string, userId?: string): Promise<number> => {
+        this.logger.debbugMessage("COUNT service");
         return await this.repository.count(postId, userId)
     }
 
