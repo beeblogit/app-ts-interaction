@@ -1,52 +1,11 @@
-name: Deploy
+name: Deploy Application
 
 on:
   push:
     branches:
       - main
-      - deploy
-    tags:
-      - "**"
 
 jobs:
   deploy:
-    runs-on: ubuntu-latest
-    environment:
-      name: prod
-    permissions:
-      id-token: write # This is required for requesting the JWT
-      contents: read  # This is required for actions/checkout
-    steps:
-      - run: echo ${{ github.ref_name }}
-      - run: echo prod
-      - uses: actions/checkout@v4
-      - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@master
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: us-east-1
-
-      - uses: actions/setup-node@v3
-        with:
-          node-version: v20.12.1
-      - name: Install dependencies
-        run: npm install
-      - name: Export secret as env
-        if: ${{ env.secret != 'null' }}
-        run: echo "$secret" | jq -r 'to_entries[] | "\(.key)=\(.value)"' >> $GITHUB_ENV
-        env: 
-          secret: ${{ toJson(secrets) }}
-      - name: Export vars as env
-        if: ${{ env.var != 'null' }}
-        env:
-          var: ${{ toJson(vars) }}
-        run: echo "$var" | jq -r 'to_entries[] | "\(.key)=\(.value)"' >> $GITHUB_ENV
-      - name: Run build Node
-        if: ${{ inputs.language == 'node' && inputs.build}}
-        run: npm ci && npm run build
-      - name: Serverless deploy
-        uses: serverless/github-action@v3.1.0
-        with:
-          args: -c "serverless deploy --verbose --stage prod"
-          entrypoint: /bin/sh
+    uses: ncostamagna/github-workflows-templates/.github/workflows/node-serverless-deploy.yml@feat/deploy-node
+    secrets: inherit
