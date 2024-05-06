@@ -10,5 +10,5 @@ jobs:
     uses: ncostamagna/github-workflows-templates/.github/workflows/node-serverless-deploy.yml@feat/deploy-node
     permissions:
       id-token: write
-      contents: read
+      contents: write
     secrets: inherit
