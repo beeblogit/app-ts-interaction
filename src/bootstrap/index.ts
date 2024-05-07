@@ -1,6 +1,12 @@
 const Sentry = require("@sentry/serverless");
-const winston = require('winston');
+import { createLogger, format, transports } from 'winston';
 import {NODE_ENV, SENTRY_ENABLED, SENTRY_DSN} from '../config'
+
+const { combine, timestamp, printf } = format;
+
+const winstonFormat = printf(({ level, message, timestamp }) => {
+    return `${timestamp} [${level}]: ${message}`; // LOG FORMAT
+});
 
 export const initSentry = () => {
     Sentry.AWSLambda.init({
@@ -16,9 +22,15 @@ export const initSentry = () => {
 }
 
 export const initWinston = () => {
-    return winston.createLogger({
+    return createLogger({
+        level: 'debug',
+        format: combine(
+            format.colorize(),
+            timestamp({ format: 'YYYY-MM-DD HH:mm:ss' }),
+            winstonFormat
+        ),
         transports: [
-            new winston.transports.Console(),
+            new transports.Console(),
         ]
     });
 }

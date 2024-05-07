@@ -26,7 +26,7 @@ export class CommentRepository implements ICommentRepository {
                 take: limit,
             })            
         } catch (e) {
-            this.logger.logError(e);
+            this.logger.error(e);
             throw internalServerErrorResp(e.toString());
         }
     };
@@ -45,7 +45,7 @@ export class CommentRepository implements ICommentRepository {
                 },
               });
         } catch (e) {
-            this.logger.logError(e);
+            this.logger.error(e);
             throw internalServerErrorResp(e.toString());
         }
     };
@@ -54,7 +54,7 @@ export class CommentRepository implements ICommentRepository {
         try {
             return await this.db.comment.count();
         } catch (e) {
-            this.logger.logError(e);
+            this.logger.error(e);
             throw internalServerErrorResp(e.toString());
         }
     }

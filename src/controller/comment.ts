@@ -19,7 +19,6 @@ export class CommentController implements ICommentController {
         
         const count = await this.service.count(req.postId, req.userId);
         const meta = buildPaginator(req.page, req.limit, count);
-        console.log(meta)
         const comments = await this.service.getall(meta.Offset(), meta.Limit(),req.postId, req.userId);
         return okResp<Comment[]>(comments, "", meta);
     };

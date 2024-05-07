@@ -4,7 +4,7 @@
   "description": "user interactions in each post",
   "main": "index.js",
   "scripts": {
-    "dev": "npx serverless offline --stage local",
+    "dev": "rm -r .build & npx serverless offline --stage local",
     "build": "npx tsc",
     "test": "echo \"Error: no test specified\" && exit 1",
     "prisma": "prisma",
@@ -32,7 +32,7 @@
   "dependencies": {
     "@prisma/client": "^5.12.1",
     "@sentry/serverless": "^7.113.0",
-    "logger-fusion": "^1.0.0",
+    "logger-fusion": "^1.0.2",
     "ts-responses": "^1.0.7",
     "ts-serverless": "^1.0.0",
     "winston": "^3.13.0",
