@@ -7,10 +7,10 @@ import {SlsHandlerResponse, Request} from 'ts-serverless'
 import { Comment, PrismaClient } from '@prisma/client';
 import {Logger, SentryLog, WinstonLog} from 'logger-fusion'
 import {initSentry, initWinston} from  '../../src/bootstrap/index'
-import {WINSTON_LOG_TRACE, SENTRY_LOG_TRACE, IS_DEBBUG} from '../../src/config'
+import {WINSTON_LOG_TRACE, SENTRY_LOG_TRACE} from '../../src/config'
 
 const Sentry = initSentry();
-const log = new Logger(IS_DEBBUG, new SentryLog(Sentry,SENTRY_LOG_TRACE), new WinstonLog(initWinston(), WINSTON_LOG_TRACE));
+const log = new Logger(new SentryLog(Sentry,SENTRY_LOG_TRACE), new WinstonLog(initWinston(), WINSTON_LOG_TRACE));
 
 const db:PrismaClient = new PrismaClient({});
 const repo = new CommentRepository(db, log);

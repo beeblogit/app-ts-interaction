@@ -1,2 +1,2 @@
-export {ReqGetAll, ReqStore} from './interfaces/comment';
-export {decoGetAll, decoStore} from './decode/comment';
+export { decoGetAll, decoStore } from './decode/comment';
+export { ReqGetAll, ReqStore } from './interfaces/comment';

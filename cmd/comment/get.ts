@@ -5,13 +5,13 @@ import {decoGetAll} from './../../src/handler/comment'
 import { Response } from 'ts-responses'
 import {SlsHandlerResponse, Request} from 'ts-serverless'
 import { Comment, PrismaClient } from '@prisma/client';
-import {Logger, SentryLog, WinstonLog, TRACE} from 'logger-fusion'
+import {Logger, SentryLog, WinstonLog} from 'logger-fusion'
 import {initSentry, initWinston} from  '../../src/bootstrap'
-import {WINSTON_LOG_TRACE, SENTRY_LOG_TRACE, IS_DEBBUG} from '../../src/config'
+import {WINSTON_LOG_TRACE, SENTRY_LOG_TRACE} from '../../src/config'
 
 //TODO: remove debbug func, only adding whether we can use.
 const Sentry = initSentry();
-const log = new Logger(IS_DEBBUG, new SentryLog(Sentry,SENTRY_LOG_TRACE), new WinstonLog(initWinston(), WINSTON_LOG_TRACE));
+const log = new Logger(new SentryLog(Sentry,SENTRY_LOG_TRACE), new WinstonLog(initWinston(), WINSTON_LOG_TRACE));
 
 const db:PrismaClient = new PrismaClient({});
 const repo = new CommentRepository(db,log);

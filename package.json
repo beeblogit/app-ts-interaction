@@ -7,6 +7,9 @@
     "dev": "rm -r .build & npx serverless offline --stage local",
     "build": "npx tsc",
     "test": "echo \"Error: no test specified\" && exit 1",
+    "format": "prettier --config prettierrc.js --write \"src/**/*.ts\"",
+    "format-check": "prettier --no-color --config prettierrc.js --check \"src/**/*.ts\"",
+    "prepare": "husky",
     "prisma": "prisma",
     "prisma:migrate": "prisma migrate dev",
     "prisma:deploy": "prisma migrate deploy --schema=./prisma/schema.prisma"
@@ -22,6 +25,12 @@
   },
   "homepage": "https://github.com/beeblogit/app-ts-interaction#readme",
   "devDependencies": {
+    "eslint": "^9.2.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-prettier": "^5.1.3",
+    "husky": "^9.0.11",
+    "prettier": "^3.2.5",
+    "prettier-plugin-organize-imports": "^3.2.4",
     "prisma": "^5.12.1",
     "prisma-erd-generator": "^1.11.2",
     "serverless": "^3.38.0",
@@ -32,7 +41,7 @@
   "dependencies": {
     "@prisma/client": "^5.12.1",
     "@sentry/serverless": "^7.113.0",
-    "logger-fusion": "^1.0.2",
+    "logger-fusion": "^1.0.3",
     "ts-responses": "^1.0.7",
     "ts-serverless": "^1.0.0",
     "winston": "^3.13.0",
