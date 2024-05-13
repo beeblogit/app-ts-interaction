@@ -10,22 +10,53 @@ generator client {
 
 datasource db {
   provider = "mysql"
-  url      = env("DATABASE_URL11")
+  url      = env("DATABASE_URL")
 }
 
 model Comment {
   id String @id @default(cuid())
 
-  userId      String
-  postId      String
+  userId String
+  postId String
 
-  name String
-  comment      String @db.Text
+  name    String
+  comment String @db.Text
 
-  likes      Int
-  
+  likes Int
+
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+  CommentLike CommentLike[]
+
+  @@map(name: "comment")
+}
+
+model CommentLike {
+  id String @id @default(cuid())
+
+  comment   Comment @relation(fields: [commentId], references: [id], onDelete: Cascade)
+  commentId String
+
+  userId String
+  postId String
+
+  type Int
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  @@map(name: "comment")
+  @@map(name: "comment_like")
+}
+
+model PostLike {
+  id     String @id @default(cuid())
+  userId String
+  postId String
+
+  type Int
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map(name: "post_like")
 }
