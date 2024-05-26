@@ -1,6 +1,6 @@
 import { Comment, PrismaClient } from '@prisma/client';
 import { ILogger } from 'logger-fusion';
-import { internalServerErrorResp } from 'ts-responses';
+import { InternalServerErrorResp } from 'ts-responses';
 
 export interface ICommentRepository {
   getall(
@@ -40,7 +40,7 @@ export class CommentRepository implements ICommentRepository {
       });
     } catch (e) {
       this.logger.error(e);
-      throw internalServerErrorResp(e.toString());
+      throw new InternalServerErrorResp(e.toString());
     }
   };
 
@@ -62,7 +62,7 @@ export class CommentRepository implements ICommentRepository {
       });
     } catch (e) {
       this.logger.error(e);
-      throw internalServerErrorResp(e.toString());
+      throw new InternalServerErrorResp(e.toString());
     }
   };
 
@@ -71,7 +71,7 @@ export class CommentRepository implements ICommentRepository {
       return await this.db.comment.count();
     } catch (e) {
       this.logger.error(e);
-      throw internalServerErrorResp(e.toString());
+      throw new InternalServerErrorResp(e.toString());
     }
   };
 }

@@ -2,8 +2,7 @@ import { CommentRepository } from './../../src/repository/comment';
 import { CommentService } from './../../src/service/comment';
 import { CommentController } from './../../src/controller/comment';
 import {decoGetAll} from './../../src/handler/comment'
-import { Response } from 'ts-responses'
-import {SlsHandlerResponse, Request} from 'ts-serverless'
+import { Request, SlsHandlerError, SlsHandlerSuccess } from 'ts-responses'
 import { Comment, PrismaClient } from '@prisma/client';
 import {Logger, SentryLog, WinstonLog} from 'logger-fusion'
 import {initSentry, initWinston} from  '../../src/bootstrap'
@@ -21,10 +20,8 @@ export const handler = Sentry.AWSLambda.wrapHandler(  async (event: Request<null
     const service = new CommentService(repo,log);
     const controller = new CommentController(service);
     const comments = await controller.getall(decoGetAll(event));
-    return await SlsHandlerResponse<Comment[]>(comments);
-  } catch (err: unknown | Response<null>) {
-    // TODO: Sentry if it's NOT Response
-    return await SlsHandlerResponse<null>(err as Response<null>);
+    return await SlsHandlerSuccess<Comment[]>(comments);
+  } catch (err: unknown | Error) {
+    return await SlsHandlerError(err as Error);
   }
-}
-)
+})

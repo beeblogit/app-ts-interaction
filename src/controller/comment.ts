@@ -1,5 +1,5 @@
 import { Comment } from '@prisma/client';
-import { Response, buildPaginator, createdResp, okResp } from 'ts-responses';
+import { CreatedResp, OkResp, Response, buildPaginator } from 'ts-responses';
 import { ReqGetAll, ReqStore } from '../handler/comment';
 import { ICommentService } from './../service/comment';
 
@@ -24,7 +24,7 @@ export class CommentController implements ICommentController {
       req.postId,
       req.userId,
     );
-    return okResp<Comment[]>(comments, '', meta);
+    return new OkResp<Comment[]>(comments, '', meta);
   };
 
   public store = async (req: ReqStore): Promise<Response<Comment>> => {
@@ -34,6 +34,6 @@ export class CommentController implements ICommentController {
       req.name,
       req.comment,
     );
-    return createdResp<Comment>(comments);
+    return new CreatedResp<Comment>(comments);
   };
 }

@@ -4,7 +4,7 @@
   "description": "user interactions in each post",
   "main": "index.js",
   "scripts": {
-    "dev": "rm -r .build & npx serverless offline --stage local",
+    "dev": "npx serverless offline --stage local",
     "build": "npx tsc",
     "test": "echo \"Error: no test specified\" && exit 1",
     "format": "prettier --config prettierrc.js --write \"src/**/*.ts\"",
@@ -25,6 +25,7 @@
   },
   "homepage": "https://github.com/beeblogit/app-ts-interaction#readme",
   "devDependencies": {
+    "@types/http-errors": "^2.0.4",
     "eslint": "^9.2.0",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-prettier": "^5.1.3",
@@ -41,8 +42,9 @@
   "dependencies": {
     "@prisma/client": "^5.12.1",
     "@sentry/serverless": "^7.113.0",
+    "http-errors": "^2.0.0",
     "logger-fusion": "^1.0.3",
-    "ts-responses": "^1.0.7",
+    "ts-responses": "^1.0.12",
     "ts-serverless": "^1.0.0",
     "winston": "^3.13.0",
     "zod": "^3.22.5",
